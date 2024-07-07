@@ -21,10 +21,8 @@
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            opacity: 1.0;
+            opacity: 0.4; /* 60% transparency */
             z-index: -1;
-            filter: blur(4px);
-            transform: scale(1.1);
         }
         #form-container {
             min-height: 100vh;
@@ -38,6 +36,14 @@
             border-radius: 5px;
             color: #000;
         }
+        .my-custom-btn {
+            background-color: #004d00;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+        }
         iframe {
             width: 100%;
             height: 100vh;
@@ -47,12 +53,60 @@
 </head>
 <body>
     <div id="form-container">
-        <iframe src="https://ee.kobotoolbox.org/x/cU7lWULO="applyCustomStyles(this.contentDocument)"></iframe>
+        <iframe src="https://ee.kobotoolbox.org/x/dMivoRYj" onload="applyCustomStyles(this.contentDocument)"></iframe>
     </div>
     <script>
+        // Create a style element
+        var style = document.createElement('style');
+        style.type = 'text/css';
+        style.innerHTML = `
+            body, html {
+                margin: 0 !important;
+                padding: 0 !important;
+                min-height: 100vh !important;
+            }
+            body::before {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url('https://i.ibb.co/NWbrZJB/Presentation1.png') !important;
+                background-size: cover !important;
+                background-position: center center !important;
+                background-repeat: no-repeat !important;
+                opacity: 0.4; /* 60% transparency */
+                z-index: -1;
+            }
+            #root {
+                min-height: 100vh !important;
+                position: relative;
+                z-index: 1;
+            }
+            .my-custom-note {
+                background-color: rgba(255, 255, 255, 0.7) !important;
+                padding: 10px !important;
+                margin: 10px 0 !important;
+                border-radius: 5px !important;
+                color: #000 !important;
+            }
+            .my-custom-btn {
+                background-color: #004d00 !important;
+                color: white !important;
+                border: none !important;
+                padding: 10px 20px !important;
+                margin: 5px !important;
+                border-radius: 5px !important;
+            }
+        `;
+        // Append the style to the document head
+        document.head.appendChild(style);
+
+        // Function to apply custom classes
         function applyCustomStyles(doc) {
             if (!doc) return;
-            var style = document.createElement('style');
+            var style = doc.createElement('style');
             style.type = 'text/css';
             style.innerHTML = `
                 .survey__row--note {
@@ -62,10 +116,29 @@
                     border-radius: 5px !important;
                     color: #000 !important;
                 }
+                button {
+                    background-color: #004d00 !important;
+                    color: white !important;
+                    border: none !important;
+                    padding: 10px 20px !important;
+                    margin: 5px !important;
+                    border-radius: 5px !important;
+                }
             `;
             doc.head.appendChild(style);
         }
+
+        // Set up a MutationObserver to handle dynamically loaded content
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+                    applyCustomStyles(mutation.target.ownerDocument);
+                }
+            });
+        });
+
+        // Observe the document
+        observer.observe(document.body, { childList: true, subtree: true });
     </script>
 </body>
 </html>
-
