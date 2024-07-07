@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KoboToolbox Custom Form</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-image: url('https://i.ibb.co/NWbrZJB/Presentation1.png');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            opacity: 1.0;
+            filter: blur(4px);
+            transform: scale(1.1);
+        }
+        #form-container {
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+        .my-custom-note {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            color: #000;
+        }
+        iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="form-container">
+        <iframe src="https://ee.kobotoolbox.org/x/dMivoRYj" onload="applyCustomStyles(this.contentDocument)"></iframe>
+    </div>
+    <script>
+        function applyCustomStyles(doc) {
+            if (!doc) return;
+            var style = document.createElement('style');
+            style.type = 'text/css';
+            style.innerHTML = `
+                .survey__row--note {
+                    background-color: rgba(255, 255, 255, 0.7) !important;
+                    padding: 10px !important;
+                    margin: 10px 0 !important;
+                    border-radius: 5px !important;
+                    color: #000 !important;
+                }
+            `;
+            doc.head.appendChild(style);
+        }
+    </script>
+</body>
+</html>
